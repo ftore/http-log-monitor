@@ -38,7 +38,6 @@ public class TerminalEntryPoint implements CommandLineRunner {
             return;
         }
 
-        //CommandLineOptions opts = new CommandLineOptions(commandLineGlobal);
         TerminalArguments terminalArgs = new TerminalArguments(commandLineGlobal);
         //System.out.println(tagsService.updateTags(opts));
         //System.exit(0);

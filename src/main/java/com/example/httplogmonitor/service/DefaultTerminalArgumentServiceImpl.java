@@ -4,6 +4,10 @@ import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.springframework.stereotype.Service;
 
+/**
+ * Reads the all valid command line arguments and shows help message if necessary.
+ * 
+ */
 @Service
 public class DefaultTerminalArgumentServiceImpl implements TerminalArgumentsService {
     @Override
@@ -13,19 +17,28 @@ public class DefaultTerminalArgumentServiceImpl implements TerminalArgumentsServ
         final Option help = Option.builder("h")
                 .longOpt("help")
                 .hasArg(false)
-                .desc("print help message")
+                .desc("Print help message")
                 .build();
 
-        //options with arguments
+        // absolute file path argument
         final Option file = Option.builder("f")
                 .longOpt("file")
                 .argName("file")
                 .hasArg()
-                .desc("access log file")
+                .desc("Absolute access log file location (default: /tmp/access.log)")
+                .build();
+
+        // Requests per second argument
+        final Option trafficThreshold = Option.builder("t")
+                .longOpt("traffic")
+                .argName("traffic")
+                .hasArg()
+                .desc("Traffic threshold per second (default: 10 requests per second")
                 .build();
 
         //add all the options
         options.addOption(help);
+        options.addOption(trafficThreshold);
 
         return options;
     }

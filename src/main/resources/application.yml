@@ -3,5 +3,9 @@ spring:
   main:
     web-application-type: none
 
-file:
+appconfig:
+  file:
     accesslog: /tmp/access.log
+  requests-per-second: 10
+
+
