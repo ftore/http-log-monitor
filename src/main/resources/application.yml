@@ -3,9 +3,19 @@ spring:
   main:
     web-application-type: none
 
+  # H2 DATABASE CONFIGURATION
+  datasource:
+    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    driver-class-name: org.h2.Driver
+    platform: h2
+
+#Logging
+logging:
+  level:
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+
 appconfig:
   file:
     accesslog: /tmp/access.log
   requests-per-second: 10
-
-
