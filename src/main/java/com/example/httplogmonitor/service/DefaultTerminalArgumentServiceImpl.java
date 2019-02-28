@@ -38,6 +38,7 @@ public class DefaultTerminalArgumentServiceImpl implements TerminalArgumentsServ
 
         //add all the options
         options.addOption(help);
+        options.addOption(file);
         options.addOption(trafficThreshold);
 
         return options;
