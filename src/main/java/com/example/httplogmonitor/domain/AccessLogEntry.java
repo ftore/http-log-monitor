@@ -24,6 +24,8 @@ public class AccessLogEntry implements Serializable {
     private String time;
     private String request;
     private String method;
+
+    @Column(name = "URL")
     private String url;
     private int status;
     private int size;
