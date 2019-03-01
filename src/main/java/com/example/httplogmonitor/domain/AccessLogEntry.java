@@ -27,6 +27,8 @@ public class AccessLogEntry implements Serializable {
 
     @Column(name = "URL")
     private String url;
+
+    @Column(name = "STATUS")
     private int status;
     private int size;
     private String referer;
@@ -45,6 +47,9 @@ public class AccessLogEntry implements Serializable {
         skip = splitter.nextToken();
         skip = splitter.nextToken("[");
         this.time = splitter.nextToken(" \t");
+        if(this.time.charAt(0) == '[') {
+            this.time = this.time.substring(1);
+        }
         skip = splitter.nextToken("\"");
 
         this.request = splitter.nextToken();

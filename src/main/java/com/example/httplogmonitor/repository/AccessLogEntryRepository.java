@@ -2,6 +2,7 @@ package com.example.httplogmonitor.repository;
 
 import com.example.httplogmonitor.domain.AccessLogEntry;
 import com.example.httplogmonitor.domain.Section;
+import com.example.httplogmonitor.domain.StatusCode;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
@@ -23,4 +24,11 @@ public interface AccessLogEntryRepository extends CrudRepository<AccessLogEntry,
             "WHERE DATEDIFF('SECOND', CREATETIME, NOW()) < 10 " +
             "GROUP BY page ORDER BY countNo DESC LIMIT 10", nativeQuery = true)
     Collection<Section> findTopSections();
+
+    @Query(value =
+            "SELECT SUBSTRING(STATUS, 0, 1) AS statusCode, COUNT(*) AS countNo " +
+            "FROM ACCESSLOGENTRY " +
+            "WHERE DATEDIFF('SECOND', CREATETIME, NOW()) < 10 " +
+            "GROUP BY statusCode", nativeQuery = true)
+    Collection<StatusCode> findStatusCounts();
 }
