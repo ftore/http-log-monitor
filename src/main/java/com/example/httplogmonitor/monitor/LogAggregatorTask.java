@@ -3,6 +3,7 @@ package com.example.httplogmonitor.monitor;
 import com.example.httplogmonitor.domain.AccessLogEntry;
 import com.example.httplogmonitor.domain.Section;
 import com.example.httplogmonitor.domain.StatusCode;
+import com.example.httplogmonitor.domain.Throughput;
 import com.example.httplogmonitor.repository.AccessLogEntryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -77,6 +78,22 @@ public class LogAggregatorTask {
             System.out.format(leftAlignFormat, status.getStatusCode() + "XX", status.getCountNo());
         }
         System.out.format("+------------------+------------+%n");
+        System.out.println();
+    }
+
+    /**
+     *
+     */
+    @Scheduled(fixedRate = 10000)
+    public void aggregateThroughput() {
+        Throughput throughput = repository.findTotalThroughput();
+        System.out.println("TOTAL BYTES TRANSFERRED");
+
+        long totalThroughput = null != throughput ? throughput.getTotalThroughput() : 0;
+
+        System.out.format("+----------------------+------------+%n");
+        System.out.format("| Total Throughput     | " + totalThroughput + "KB    |%n");
+        System.out.format("+----------------------+------------+%n");
         System.out.println();
     }
 }

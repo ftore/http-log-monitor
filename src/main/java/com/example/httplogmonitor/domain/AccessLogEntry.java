@@ -30,6 +30,8 @@ public class AccessLogEntry implements Serializable {
 
     @Column(name = "STATUS")
     private int status;
+
+    @Column(name = "SIZE")
     private int size;
     private String referer;
     private String userAgent;
