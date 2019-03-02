@@ -50,14 +50,14 @@ public class TerminalEntryPoint implements CommandLineRunner {
         TerminalArguments terminalArgs = new TerminalArguments(commandLineGlobal);
         this.logTailer.startTailer(terminalArgs);
 
-        LOGGER.info("You can press Ctrl+C to shutdown application");
+        System.out.println("You can press Ctrl+C to shutdown application");
         //Thread.currentThread().join();
         //System.exit(0);
     }
 
     @PreDestroy
     public void onExit() {
-        LOGGER.info("### STOP FROM THE LIFECYCLE ###");
+        LOGGER.debug("### STOP FROM THE LIFECYCLE ###");
         this.logTailer.stopTailer();
     }
 }

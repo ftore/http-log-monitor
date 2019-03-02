@@ -5,13 +5,15 @@ spring:
 
   # H2 DATABASE CONFIGURATION
   datasource:
-    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    url: jdbc:h2:mem:testdb;
     driver-class-name: org.h2.Driver
     platform: h2
 
 #Logging
 logging:
   level:
+    org.apache.commons.io.input: DEBUG
+    com.example.httplogmonitor: DEBUG
     org.hibernate.SQL: DEBUG
     org.hibernate.type.descriptor.sql.BasicBinder: TRACE
 

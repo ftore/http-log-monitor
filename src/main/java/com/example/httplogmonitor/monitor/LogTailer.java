@@ -1,6 +1,6 @@
 package com.example.httplogmonitor.monitor;
 
-import com.example.httplogmonitor.TerminalEntryPoint;
+import com.example.httplogmonitor.domain.ApplicationConfig;
 import com.example.httplogmonitor.domain.TerminalArguments;
 import com.example.httplogmonitor.repository.AccessLogEntryRepository;
 import org.apache.commons.io.input.Tailer;
@@ -30,16 +30,19 @@ public class LogTailer {
     @Autowired
     private AccessLogEntryRepository repository;
 
+    @Autowired
+    private ApplicationConfig applicationConfig;
+
     private Tailer tailer;
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(TerminalEntryPoint.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(LogTailer.class);
 
     /**
      * Starts tailing access.log file
      * @param arguments
      */
     public void startTailer(TerminalArguments arguments) {
-
+        LOGGER.debug("Starting log tailer");
         // override default conf
         if(arguments != null) {
             if (null != arguments.getAccessLogFile() && !"".equals(arguments.getAccessLogFile())) {
@@ -59,15 +62,23 @@ public class LogTailer {
             System.exit(1);
         }
 
-        TailerListener listener = new LogFileTailerListener(repository);
-        this.tailer = Tailer.create(file, listener, 1000);
+        // set global application config
+        // BAD PRACTISE: try to reduce global vars usage
+        applicationConfig.setAccessLogFile(this.accessLogFile);
+        applicationConfig.setReqestPerSecond(this.reqPerSecond);
+        LOGGER.debug("Application configuration: access log file location: " + applicationConfig.getAccessLogFile()
+            + " | requests per second: " + applicationConfig.getReqestPerSecond());
 
+        TailerListener listener = new LogFileTailerListener(repository);
+        this.tailer = Tailer.create(file, listener, 1000, true);
+        LOGGER.debug("Started log tailer");
     }
 
     /**
      * Stops tailing access.log file
      */
     public void stopTailer() {
+        LOGGER.debug("Stopping log tailer");
         this.tailer.stop();
     }
 }

@@ -1,9 +1,6 @@
 package com.example.httplogmonitor.repository;
 
-import com.example.httplogmonitor.domain.AccessLogEntry;
-import com.example.httplogmonitor.domain.Section;
-import com.example.httplogmonitor.domain.StatusCode;
-import com.example.httplogmonitor.domain.Throughput;
+import com.example.httplogmonitor.domain.*;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
@@ -38,4 +35,10 @@ public interface AccessLogEntryRepository extends CrudRepository<AccessLogEntry,
             "FROM ACCESSLOGENTRY " +
             "WHERE DATEDIFF('SECOND', CREATETIME, NOW()) < 10", nativeQuery = true)
     Throughput findTotalThroughput();
+
+    @Query(value =
+            "SELECT COUNT(*) AS totalHits " +
+            "FROM ACCESSLOGENTRY " +
+            "WHERE DATEDIFF('MINUTE', CREATETIME, NOW()) < 2", nativeQuery = true)
+    Hits findTotalHits();
 }

@@ -3,6 +3,8 @@ package com.example.httplogmonitor.monitor;
 import com.example.httplogmonitor.domain.AccessLogEntry;
 import com.example.httplogmonitor.repository.AccessLogEntryRepository;
 import org.apache.commons.io.input.TailerListenerAdapter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -15,6 +17,8 @@ import java.util.Date;
 public class LogFileTailerListener extends TailerListenerAdapter {
     private AccessLogEntryRepository repository;
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(LogFileTailerListener.class);
+
     public LogFileTailerListener(AccessLogEntryRepository  repository) {
         this.repository = repository;
     }
@@ -25,6 +29,7 @@ public class LogFileTailerListener extends TailerListenerAdapter {
      * @param line log line in access log file
      */
     public void handle(String line) {
+        LOGGER.debug("Received a log line: " + line);
         AccessLogEntry accessLogEntry = new AccessLogEntry(line);
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
