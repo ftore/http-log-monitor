@@ -116,7 +116,7 @@ public class LogAggregatorTask {
             // show the notification
             if(!alert && averageRequestPerSecond >= applicationConfig.getReqestPerSecond()) {
                 alert = true;
-                System.out.printf(ANSI_RED + "High traffic generated an alert - { hits = %s, triggered at %s}%n"
+                System.out.printf(ANSI_RED + "High traffic generated an alert - hits = {%s}, triggered at {%s}%n"
                         + ANSI_RESET,
                         averageRequestPerSecond,
                         LocalDateTime.now());
@@ -124,7 +124,7 @@ public class LogAggregatorTask {
 
             if(alert && averageRequestPerSecond < applicationConfig.getReqestPerSecond()) {
                 alert = false;
-                System.out.printf(ANSI_GREEN + "High traffic alert recovered - { hits = %s, recovered at %s}%n"
+                System.out.printf(ANSI_GREEN + "High traffic alert recovered - hits = {%s}, recovered at {%s}%n"
                         + ANSI_RESET,
                         averageRequestPerSecond,
                         LocalDateTime.now().toString());
