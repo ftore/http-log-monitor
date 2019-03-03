@@ -39,6 +39,6 @@ public interface AccessLogEntryRepository extends CrudRepository<AccessLogEntry,
     @Query(value =
             "SELECT COUNT(*) AS totalHits " +
             "FROM ACCESSLOGENTRY " +
-            "WHERE DATEDIFF('MINUTE', CREATETIME, NOW()) < 2", nativeQuery = true)
+            "WHERE DATEDIFF('SECOND', CREATETIME, NOW()) < 120", nativeQuery = true)
     Hits findTotalHits();
 }

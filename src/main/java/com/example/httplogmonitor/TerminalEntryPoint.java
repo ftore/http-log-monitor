@@ -1,7 +1,7 @@
 package com.example.httplogmonitor;
 
 import com.example.httplogmonitor.domain.TerminalArguments;
-import com.example.httplogmonitor.monitor.LogTailer;
+import com.example.httplogmonitor.monitor.LogTailerComponent;
 import com.example.httplogmonitor.service.TerminalArgumentsService;
 import org.apache.commons.cli.*;
 import org.slf4j.Logger;
@@ -20,7 +20,7 @@ public class TerminalEntryPoint implements CommandLineRunner {
     private TerminalArgumentsService argumentsService;
 
     @Autowired
-    private LogTailer logTailer;
+    private LogTailerComponent logTailer;
 
     private final static String COMMAND_LINE_PREFIX = "java -jar http-log-monitor-0.0.1-SNAPSHOT.jar";
 

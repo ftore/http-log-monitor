@@ -19,7 +19,7 @@ import java.io.File;
  * @author arakhimoff@gmail.com
  */
 @Component
-public class LogTailer {
+public class LogTailerComponent {
 
     @Value("${appconfig.file.accesslog}")
     private String accessLogFile;
@@ -35,7 +35,7 @@ public class LogTailer {
 
     private Tailer tailer;
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(LogTailer.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(LogTailerComponent.class);
 
     /**
      * Starts tailing access.log file
@@ -59,7 +59,7 @@ public class LogTailer {
         // check whether file exists and is readable
         if(!file.exists() && !file.canRead()) {
             LOGGER.error("File " + this.accessLogFile + " doesn't exist or it is not readable.");
-            System.exit(1);
+            System.exit(0);
         }
 
         // set global application config
@@ -70,7 +70,7 @@ public class LogTailer {
             + " | requests per second: " + applicationConfig.getReqestPerSecond());
 
         TailerListener listener = new LogFileTailerListener(repository);
-        this.tailer = Tailer.create(file, listener, 1000, true);
+        this.tailer = Tailer.create(file, listener, 1000);
         LOGGER.debug("Started log tailer");
     }
 

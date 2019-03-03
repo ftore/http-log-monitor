@@ -94,6 +94,11 @@ public class LogAggregatorTask {
         System.out.println();
     }
 
+    /**
+     * Watches on high traffic and print notification in two different colors:
+     * - red for high traffic spike
+     * - green for traffic recovery
+     */
     @Scheduled(fixedRate = 120000)
     public void aggregateHits() {
         LOGGER.debug("Application config: " + applicationConfig.getAccessLogFile() + " | "
@@ -104,7 +109,8 @@ public class LogAggregatorTask {
         if(null != hits) {
             // we divide to total hits to 120 seconds (2 minutes)
             // to find out average requests pre second
-            long averageRequestPerSecond = hits.getTotalHits() / 120;
+            long totalHits = hits.getTotalHits();
+            long averageRequestPerSecond = totalHits / 120;
 
             // if average request are higher than threshold
             // show the notification

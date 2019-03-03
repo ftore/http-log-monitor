@@ -67,6 +67,9 @@ public class AccessLogEntry implements Serializable {
 
         skip = splitter.nextToken("\"");
         this.referer = splitter.nextToken();
+        if(this.referer.length() > 256) {
+            this.referer = this.referer.substring(0, 255);
+        }
         skip = splitter.nextToken();
         this.userAgent = splitter.nextToken();
 
