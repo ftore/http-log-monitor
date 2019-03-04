@@ -17,7 +17,7 @@ public interface AccessLogEntryRepository extends CrudRepository<AccessLogEntry,
     List<AccessLogEntry> findAllByTime();
 
     @Query(value =
-            "SELECT SUBSTRING(URL, 0, LOCATE('/', URL, 2) - 1) AS page, COUNT(*) AS countNo " +
+            "SELECT CASE LOCATE('/', URL, 2) WHEN 0 THEN URL ELSE  SUBSTRING(URL, 0, LOCATE('/', URL, 2) - 1) END AS page, COUNT(*) AS countNo " +
             "FROM ACCESSLOGENTRY " +
             "WHERE DATEDIFF('SECOND', CREATETIME, NOW()) < 10 " +
             "GROUP BY page ORDER BY countNo DESC LIMIT 10", nativeQuery = true)
